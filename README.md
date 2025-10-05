@@ -147,7 +147,7 @@ Not terrible, but not great. We can do better.
 
 We can get to convergence more quickly by changing the hyperparameters, such as by increasing the learning rate to 0.01, which allows us to converge in around 3700 steps. But what we really want to do is get the individual iteration times down. 
 
-#Optimized implementation
+# Optimized implementation
 
 The biggest optimization we can make from here isn't in the implementation (short of adding ndarray), but rather on the algorithmic side. The original ADAM paper suggests that the basic representation of the algorithm above can be optimized, at the cost of clarity, by replacing the explicit calculation of m_t_est and v_t_est to get theta with the following operations:
 
