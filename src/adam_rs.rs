@@ -32,13 +32,13 @@ pub fn adam_basic(
             beta2 * v + (1.0 - beta2) * g.powi(2)
         }).collect();
 
-        let m_t_est = m_t.iter().map(|m| {
+        let m_t_est: Vec<f64> = m_t.iter().map(|m| {
             m / (1.0 - beta1.powi(t))
-        });
+        }).collect();
 
-        let v_t_est = v_t.iter().map(|v| {
+        let v_t_est: Vec<f64> = v_t.iter().map(|v| {
             v / (1.0 - beta2.powi(t))
-        });
+        }).collect();
 
         let theta_old = theta.clone();
 
@@ -114,4 +114,3 @@ pub fn adam_optimized(
     }
     theta
 }
-
