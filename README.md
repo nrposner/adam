@@ -1,10 +1,8 @@
-As seen on [the blahg](https://nrposner.com/blog/learning-ml-simple-adam-implementation-in-rust/).
-
 This week's Computer Vision homework has us reading through some ML papers. One of these is *[Adam: A Method for Stochastic Optimization](https://arxiv.org/abs/1412.6980)* Kingma & Ba (2015). 
 
 Adam is a very widely used gradient descent optimization algorithm that comes as standard in lots of ML frameworks, though recently it's got some competition from the [polar Muon](https://arxiv.org/abs/2505.16932) algorithm. 
 
-Reading the paper, I decided to quickly implement a simple version of the algorithm in Rust to help internalize what it does, and then do a bit of benchmarking. 
+Reading the paper, I decided to quickly implement a [simple version](https://github.com/nrposner/adam) of the algorithm in Rust to help internalize what it does, and then do a bit of benchmarking. 
 
 # First Steps
 
@@ -143,6 +141,8 @@ About 40 microseconds total, and this increases linearly as we increase n_steps 
 
 This also means we can reliably calculate our inner loop to take around 400 nanoseconds per iteration.
 
+Incidentally, if we didn't drop the .clone() earlier in exchange for the .iter()s, we get around a 10% performance regression, to around 440 nanoseconds per iteration.
+
 Not terrible, but not great. We can do better. 
 
 We can get to convergence more quickly by changing the hyperparameters, such as by increasing the learning rate to 0.01, which allows us to converge in around 3700 steps. But what we really want to do is get the individual iteration times down. 
@@ -209,4 +209,4 @@ If this is true, it may still be possible to manually implement SIMD on top of t
 
 # Next Steps
 
-The next step for this would probably be to develop a Python interface using pyo3: but this runs into some blocks, since we need to pass the gradient function into Rust somehow. The number of ML functions used for this isn't especially large, so I could probably just develop several and allow the user to select them via an enum parameter, but that would make this less flexible. 
+The next step for this would probably be to develop a Python interface using pyo3: but this runs into some blocks, since we need to pass the gradient function into Rust somehow. The number of ML functions used for this isn't especially large, so I could probably just develop several and allow the user to select them via an enum parameter, but that would make this less flexible.
